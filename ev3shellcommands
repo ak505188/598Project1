@@ -1,0 +1,7 @@
+# Just copy these into your .bashrc or your .bash_profile
+
+export JAVA_HOME_6="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home"
+
+alias ev3javac="$JAVA_HOME_6/bin/javac -cp $EV3_HOME/lib/ev3/ev3classes.jar"
+alias ev3cpy="scp $1 root@10.0.1.1:/home/lejos/programs"
+alias ev3ssh="ssh root@10.0.1.1"
