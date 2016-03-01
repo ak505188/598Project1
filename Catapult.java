@@ -12,7 +12,7 @@ public class Catapult {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+    /*		
 		// This assumes that the Sensor is plugged into the first Sensor Port
 		Port p1 = LocalEV3.get().getPort("S1");
 		// Create a ultrasonic object using p1
@@ -22,23 +22,29 @@ public class Catapult {
 		// sample provider stores data in a float. This gets the size the float
 		// needs to be
 		float[] distance = new float[sample.sampleSize()];
-
+    */
     // Set Speed
 
-		Motor.B.forward();
+    EV3UltrasonicSensor distSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+    distSensor.enable();
+    SampleProvider distSample = distSensor.getDistanceMode();
+    float[] distance = new float[1];
+
+  	Motor.B.forward();
 		while(true) {
-			sample.fetchSample(distance, 0);
-      System.out.println("Distance: " + distance);
+			distSample.fetchSample(distance, 0);
+      System.out.println("DistSample SampleSize: " + distSample.sampleSize());
+      System.out.println("Distance: " + distance[0]);
 			//This gets the sensor data and stores it in the distance float
 			//The distance data is stored in index 0 of the array
 			//If there is an object within 2 CM (Meters is default measurement) 
-			if (distance[0] < .02) {
+			if (distance[0] < .05) {
 			  // Fire catapult!
 				launch();
 			}
       if (Button.ESCAPE.isDown()) {
         Motor.B.stop();
-        sensor.close();
+        distSensor.close();
         System.exit(1);
 			}
 		}
