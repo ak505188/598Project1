@@ -30,7 +30,7 @@ public class Catapult {
 		boolean launched = false;
 		
 		Motor.A.setSpeed(Motor.A.getMaxSpeed());
-		Motor.A.rotateTo(-85);
+		Motor.A.rotateTo(-75);
 		
 		Motor.A.rotateTo(0);
 		
