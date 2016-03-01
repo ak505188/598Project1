@@ -1,4 +1,4 @@
-package catapult;
+// package catapult;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
@@ -28,6 +28,7 @@ public class Catapult {
 		Motor.B.forward();
 		while(true) {
 			sample.fetchSample(distance, 0);
+      System.out.println("Distance: " + distance);
 			//This gets the sensor data and stores it in the distance float
 			//The distance data is stored in index 0 of the array
 			//If there is an object within 2 CM (Meters is default measurement) 
