@@ -39,23 +39,37 @@ public class Catapult implements Sounds{
     
     Motor.B.forward();
     while(true) {
+    
+    	/*
+      if(!distSensor.isEnabled())
+      {
+    	  distance = null;
+    	  distance = new float[1];
+    	  distSensor.enable();
+      }
+      */
+    	
       distSample.fetchSample(distance, 0);
-      System.out.println("DistSample SampleSize: " + distSample.sampleSize());
-      System.out.println("Distance: " + distance[0]);
+      //System.out.println("DistSample SampleSize: " + distSample.sampleSize());
+      //System.out.println("Distance: " + distance[0]);
+      
       //This gets the sensor data and stores it in the distance float
       //The distance data is stored in index 0 of the array
       //If there is an object within 2 CM (Meters is default measurement) 
       if (distance[0] < .05) {
-        // Fire catapult!
-    	try
-    	{
-    		hammerTime();
-    	}
-    	catch(FileNotFoundException f)
-    	{
-    		System.out.println(f);
-    	}
+    	
+        //file = new File("./hammertime.wav");
+		//Sound.playSample(file, 100);
+		//file = null;
+    	
+		Motor.B.stop();
+    	//distSensor.disable();
+		hammerTime();
+		Motor.B.forward();
+		distance[0] = 2;
+		
       }
+      
       if (Button.ESCAPE.isDown()) {
         Motor.B.stop();
         distSensor.close();
@@ -65,21 +79,17 @@ public class Catapult implements Sounds{
 
   }
   
-  public static void hammerTime() throws FileNotFoundException
+  public static void hammerTime()
   {
-    Motor.B.stop();
+    
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
     //Sound.setVolume(20);
     //Sound.beepSequenceUp();
     
-    Sound.playSample(file, 100);
-    
-    System.out.println("before for loop");
-    for (int i = 0; i < 3; i++) {  
+    //for (int i = 0; i < 3; i++) {  
       Motor.A.rotateTo(-80);
       Motor.A.rotateTo(0);
-    }
-    System.out.println("Made it!");
-    Motor.B.forward();  
+    //}
+     
   }
 }
