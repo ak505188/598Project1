@@ -1,5 +1,8 @@
 package catapult;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.port.Port;
@@ -11,6 +14,8 @@ import lejos.hardware.motor.Motor;
 
 public class Catapult implements Sounds{
 
+	public static File file = new File("./hammertime.wav");
+	
   public static void main(String[] args) {
     // TODO Auto-generated method stub
     /*    
@@ -42,7 +47,14 @@ public class Catapult implements Sounds{
       //If there is an object within 2 CM (Meters is default measurement) 
       if (distance[0] < .05) {
         // Fire catapult!
-        hammerTime();
+    	try
+    	{
+    		hammerTime();
+    	}
+    	catch(FileNotFoundException f)
+    	{
+    		System.out.println(f);
+    	}
       }
       if (Button.ESCAPE.isDown()) {
         Motor.B.stop();
@@ -53,16 +65,21 @@ public class Catapult implements Sounds{
 
   }
   
-  public static void hammerTime()
+  public static void hammerTime() throws FileNotFoundException
   {
     Motor.B.stop();
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
-    Sound.setVolume(20);
-    Sound.beepSequenceUp();
+    //Sound.setVolume(20);
+    //Sound.beepSequenceUp();
+    
+    Sound.playSample(file, 100);
+    
+    System.out.println("before for loop");
     for (int i = 0; i < 3; i++) {  
       Motor.A.rotateTo(-80);
       Motor.A.rotateTo(0);
     }
+    System.out.println("Made it!");
     Motor.B.forward();  
   }
 }
