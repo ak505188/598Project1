@@ -1,4 +1,4 @@
-// package catapult;
+package catapult;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
@@ -29,7 +29,8 @@ public class Catapult {
     distSensor.enable();
     SampleProvider distSample = distSensor.getDistanceMode();
     float[] distance = new float[1];
-
+    Motor.A.rotateTo(90);
+    
     Motor.B.forward();
     while(true) {
       distSample.fetchSample(distance, 0);
@@ -40,7 +41,7 @@ public class Catapult {
       //If there is an object within 2 CM (Meters is default measurement) 
       if (distance[0] < .05) {
         // Fire catapult!
-        launch();
+        hammerTime();
       }
       if (Button.ESCAPE.isDown()) {
         Motor.B.stop();
@@ -51,13 +52,14 @@ public class Catapult {
 
   }
   
-  public static void launch()
+  public static void hammerTime()
   {
     Motor.B.stop();
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
 
+    
     for (int i = 0; i < 3; i++) {  
-      Motor.A.rotateTo(-95);
+      Motor.A.rotateTo(-80);
       Motor.A.rotateTo(0);
     }
     Motor.B.forward();  
