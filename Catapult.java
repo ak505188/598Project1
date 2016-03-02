@@ -5,10 +5,11 @@ import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.SampleProvider;
-
+import lejos.hardware.Sound;
+import lejos.hardware.Sounds;
 import lejos.hardware.motor.Motor;
 
-public class Catapult {
+public class Catapult implements Sounds{
 
   public static void main(String[] args) {
     // TODO Auto-generated method stub
@@ -56,8 +57,8 @@ public class Catapult {
   {
     Motor.B.stop();
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
-
-    
+    Sound.setVolume(20);
+    Sound.beepSequenceUp();
     for (int i = 0; i < 3; i++) {  
       Motor.A.rotateTo(-80);
       Motor.A.rotateTo(0);
