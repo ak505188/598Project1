@@ -1,4 +1,4 @@
-package catapult;
+// package catapult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,12 +14,12 @@ import lejos.hardware.motor.Motor;
 
 public class McHammer implements Sounds{
 
-  public static File file = new File("./hammertime.wav");
+  public static EV3UltrasonicSensor distSensor =
+      new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
   
   public static void main(String[] args) {
 
     // Create Sensor object and enable it
-    EV3UltrasonicSensor distSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
     distSensor.enable();
 
     // Create a sample provider to get distance from sensor
@@ -47,6 +47,7 @@ public class McHammer implements Sounds{
       // If close enough to object runs hammerTime
       if (distance[0] < .05) {
         Motor.B.stop();
+        playSound();
         hammerTime();
         Motor.B.forward();
       }
@@ -59,6 +60,19 @@ public class McHammer implements Sounds{
     }
   }
   
+  public static void playSound() {
+    try {
+      System.out.println("1");
+      File file = new File("./hammertime.wav");
+      System.out.println("2");
+      Sound.playSample(file, 100);    
+      System.out.println("3");
+    } catch (Exception e) {
+      System.out.println("Exception: " + e);
+      distSensor.close();
+    }
+  }
+
   public static void hammerTime() {
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
     // Sound.setVolume(20);
