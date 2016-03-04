@@ -1,4 +1,4 @@
-// package catapult;
+package catapult;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +16,7 @@ public class McHammer implements Sounds{
 
   public static EV3UltrasonicSensor distSensor =
       new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+  //public static File file = new File("./hammertime.wav");
   
   public static void main(String[] args) {
 
@@ -47,7 +48,8 @@ public class McHammer implements Sounds{
       // If close enough to object runs hammerTime
       if (distance[0] < .05) {
         Motor.B.stop();
-        playSound();
+        Sound.beepSequence();
+        
         hammerTime();
         Motor.B.forward();
       }
@@ -57,19 +59,6 @@ public class McHammer implements Sounds{
         distSensor.close();
         System.exit(1);
       }
-    }
-  }
-  
-  public static void playSound() {
-    try {
-      System.out.println("1");
-      File file = new File("./hammertime.wav");
-      System.out.println("2");
-      Sound.playSample(file, 100);    
-      System.out.println("3");
-    } catch (Exception e) {
-      System.out.println("Exception: " + e);
-      distSensor.close();
     }
   }
 
