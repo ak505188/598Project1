@@ -1,3 +1,4 @@
+// Uncomment this if you are building in Eclipse
 // package catapult;
 
 import java.io.File;
@@ -17,6 +18,8 @@ public class McHammer implements Sounds{
   public static EV3UltrasonicSensor distSensor =
       new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
   
+  public static File file = new File("./hammertime.wav");
+
   public static void main(String[] args) {
 
     // Create Sensor object and enable it
@@ -61,27 +64,15 @@ public class McHammer implements Sounds{
   }
   
   public static void playSound() {
-    try {
-      System.out.println("1");
-      File file = new File("./hammertime.wav");
-      System.out.println("2");
-      Sound.playSample(file, 100);    
-      System.out.println("3");
-    } catch (Exception e) {
-      System.out.println("Exception: " + e);
-      distSensor.close();
-    }
+    Sound.playSample(file, 100);    
   }
 
   public static void hammerTime() {
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
-    // Sound.setVolume(20);
-    // Sound.beepSequenceUp();
-    
-    // for (int i = 0; i < 3; i++) {  
+    for (int i = 0; i < 3; i++) {  
       Motor.A.rotateTo(-80);
       Motor.A.rotateTo(0);
-    // }
+    }
   }
 
 }
