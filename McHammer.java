@@ -14,12 +14,13 @@ import lejos.hardware.motor.Motor;
 
 public class McHammer implements Sounds{
 
-  public static File file = new File("./hammertime.wav");
+  public static EV3UltrasonicSensor distSensor =
+      new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
+  //public static File file = new File("./hammertime.wav");
   
   public static void main(String[] args) {
 
     // Create Sensor object and enable it
-    EV3UltrasonicSensor distSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S1"));
     distSensor.enable();
 
     // Create a sample provider to get distance from sensor
@@ -47,6 +48,8 @@ public class McHammer implements Sounds{
       // If close enough to object runs hammerTime
       if (distance[0] < .05) {
         Motor.B.stop();
+        Sound.beepSequence();
+        
         hammerTime();
         Motor.B.forward();
       }
@@ -58,7 +61,7 @@ public class McHammer implements Sounds{
       }
     }
   }
-  
+
   public static void hammerTime() {
     Motor.A.setSpeed(Motor.A.getMaxSpeed());
     // Sound.setVolume(20);
