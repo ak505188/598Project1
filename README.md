@@ -1,3 +1,7 @@
+ - Alexandr Kolesnik
+ - Frank Addelia
+ - Tim Hughes
+
 # Lejos Mindstorm project for 598EA
 
 Ran into major bug where playing sound file randomly crashes the program.
